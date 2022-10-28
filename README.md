@@ -1,4 +1,4 @@
-**Реализация Blue-Green Deployment + Nginx. **
+Реализация Blue-Green Deployment + Nginx.
 
 За основу взят проект https://github.com/Sinkler/docker-nginx-blue-green
 
