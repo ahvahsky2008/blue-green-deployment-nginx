@@ -1,4 +1,6 @@
 upstream blue {
+    least_conn;
+
     {{ range service "backends.blue" }}
         server {{ .Address }}:{{ .Port }};
     {{ else }}
@@ -11,6 +13,8 @@ upstream blue {
 }
 
 upstream green {
+    least_conn;
+
     {{ range service "backends.green" }}
         server {{ .Address }}:{{ .Port }};
     {{ else }}

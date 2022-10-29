@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   blue:
-    container_name: blue
+    # container_name: blue
     image: app:blue
     restart: always
     environment:
@@ -14,10 +14,12 @@ services:
     command: bash -c "uvicorn main:app --host 0.0.0.0 --port 80 --reload"
     ports:
       - "80"
+    deploy:
+      replicas: 2
 
 
   green:
-    container_name: green
+    # container_name: green
     image: app:green
     environment:
       - SERVICE_80_NAME=green
@@ -28,6 +30,8 @@ services:
     command: bash -c "uvicorn main:app --host 0.0.0.0 --port 80 --reload"
     ports:
       - "80"
+    deploy:
+      replicas: 2
 
   nginx:
     container_name: nginx

@@ -10,19 +10,24 @@ cd app
 docker build . -t app:new
 cd ..
 
-echo 'Check the current state'
-blue_is_run=$(docker exec blue echo 'yes' 2> /dev/null || echo 'no')
 
 state='blue'
 new_state='green'
 new_upstream=${green_upstream}
 
-if [[ ${blue_is_run} == 'no' ]]
+
+echo 'Check the current state'
+blue_is_not_run=$(docker ps | grep project-blue- | awk '{print $1}')
+if [ "$blue_is_not_run" == "" ]
 then
+    echo 'blue не запущен'
     state='green'
     new_state='blue'
     new_upstream=${blue_upstream}
+else
+    echo 'blue запущен'
 fi
+
 
 echo "Create the app:${new_state} image"
 docker tag app:new app:${new_state}
@@ -35,9 +40,10 @@ echo "Тут нужно проверить дополнительно запус
 sleep 10s
 
 echo 'Check the new app for 200 code'
-status=$(docker-compose run --rm nginx curl ${new_upstream} -o /dev/null -Isw '%{http_code}')
+status=$(docker-compose run --rm nginx curl -XGET ${new_upstream} -o /dev/null -Isw '%{http_code}')
 if [[ ${status} != '200' ]]
 then
+    echo "NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOo"
     echo "Bad HTTP response in the ${new_state} app: ${status}"
     ./reset.sh ${key_value_store} ${state}
     exit 1
