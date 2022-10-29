@@ -15,7 +15,7 @@ services:
     ports:
       - "80"
     deploy:
-      replicas: 2
+      replicas: 5
 
 
   green:
@@ -31,7 +31,7 @@ services:
     ports:
       - "80"
     deploy:
-      replicas: 2
+      replicas: 5
 
   nginx:
     container_name: nginx

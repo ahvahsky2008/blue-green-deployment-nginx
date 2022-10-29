@@ -17,7 +17,7 @@ new_upstream=${green_upstream}
 
 
 echo 'Check the current state'
-blue_is_not_run=$(docker ps | grep project-blue- | awk '{print $1}')
+blue_is_not_run=$(docker ps | grep blue-green-deployment-nginx-blue- | awk '{print $1}')
 if [ "$blue_is_not_run" == "" ]
 then
     echo 'blue не запущен'
